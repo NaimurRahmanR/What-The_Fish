@@ -77,3 +77,103 @@ Focus on providing accurate marine biology and culinary safety information.
       // Parse JSON response
       final jsonText = _extractJson(responseText);
       final data = _parseJsonResponse(jsonText);
+        if (data == null) {
+        throw Exception('Failed to parse response');
+      }
+
+      // Create FishIdentification object
+      final alternatives = (data['alternatives'] as List<dynamic>?)
+          ?.map((alt) => AlternativeFish(
+                speciesName: alt['speciesName'] ?? 'Unknown',
+                scientificName: alt['scientificName'] ?? 'Unknown',
+                confidence: (alt['confidence'] ?? 0.0).toDouble(),
+              ))
+          .toList() ?? [];
+
+      return FishIdentification(
+        speciesName: data['speciesName'] ?? 'Unknown Fish',
+        scientificName: data['scientificName'] ?? 'Unknown species',
+        confidence: (data['confidence'] ?? 0.0).toDouble(),
+        imagePath: imagePath,
+        habitat: data['habitat'],
+        size: data['size'],
+        facts: data['facts'],
+        alternatives: alternatives,
+        isEdible: data['isEdible'] ?? false,
+        edibilityReason: data['edibilityReason'],
+        cookingMethods: data['cookingMethods'],
+      );
+      
+    } catch (e) {
+      print('Error identifying fish: $e');
+      // Return a fallback identification
+      return _createFallbackIdentification(imagePath);
+    }
+  }
+
+  String _extractJson(String text) {
+    // Try to extract JSON from the response
+    final jsonStart = text.indexOf('{');
+    final jsonEnd = text.lastIndexOf('}');
+    
+    if (jsonStart != -1 && jsonEnd != -1 && jsonEnd > jsonStart) {
+      return text.substring(jsonStart, jsonEnd + 1);
+    }
+    
+    return text;
+  }
+
+  Map<String, dynamic>? _parseJsonResponse(String jsonText) {
+    try {
+      // Clean up the JSON text
+      final cleanJson = jsonText
+          .replaceAll('```json', '')
+          .replaceAll('```', '')
+          .trim();
+      
+      return {
+        'speciesName': _extractValue(cleanJson, 'speciesName') ?? 'Unknown Fish',
+        'scientificName': _extractValue(cleanJson, 'scientificName') ?? 'Unknown species',
+        'confidence': double.tryParse(_extractValue(cleanJson, 'confidence') ?? '0.0') ?? 0.0,
+        'habitat': _extractValue(cleanJson, 'habitat'),
+        'size': _extractValue(cleanJson, 'size'),
+        'facts': _extractValue(cleanJson, 'facts'),
+        'isEdible': _extractValue(cleanJson, 'isEdible')?.toLowerCase() == 'true',
+        'edibilityReason': _extractValue(cleanJson, 'edibilityReason'),
+        'cookingMethods': _extractValue(cleanJson, 'cookingMethods'),
+        'alternatives': [],
+      };
+    } catch (e) {
+      print('Error parsing JSON: $e');
+      return null;
+    }
+  }
+
+  String? _extractValue(String json, String key) {
+    final pattern = RegExp('"$key"\\s*:\\s*"([^"]*)"');
+    final match = pattern.firstMatch(json);
+    return match?.group(1);
+  }
+
+  FishIdentification _createFallbackIdentification(String imagePath) {
+    return FishIdentification(
+      speciesName: 'Unidentified Fish',
+      scientificName: 'Species unknown',
+      confidence: 0.1,
+      imagePath: imagePath,
+      habitat: 'Unable to determine habitat',
+      size: 'Size unknown',
+      facts: 'This appears to be an aquatic creature, but we could not identify the specific species.',
+      isEdible: false,
+      edibilityReason: 'Edibility cannot be determined without proper identification. Do not consume unknown fish species.',
+      cookingMethods: 'SAFETY WARNING: Never consume unidentified fish as they may be toxic or dangerous.',
+      alternatives: [
+        AlternativeFish(
+          speciesName: 'Generic Fish',
+          scientificName: 'Pisces sp.',
+          confidence: 0.05,
+        ),
+      ],
+    );
+  }
+}
