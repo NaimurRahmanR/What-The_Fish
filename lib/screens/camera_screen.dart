@@ -98,7 +98,7 @@ class _CameraScreenState extends State<CameraScreen>
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        ScaffoldMessenger.of(context).showSnackBar(
+        
         SnackBar(content: Text('Error picking image: $e')),
       );
     }
