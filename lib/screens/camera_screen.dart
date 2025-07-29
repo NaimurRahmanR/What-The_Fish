@@ -66,7 +66,7 @@ class _CameraScreenState extends State<CameraScreen>
         }
       }
     } catch (e) {
-      print('Error initializing camera: $e');
+      debugPrint('Error initializing camera: $e');
     }
   }
 
@@ -187,7 +187,7 @@ class _CameraScreenState extends State<CameraScreen>
         _isFlashOn = !_isFlashOn;
       });
     } catch (e) {
-      print('Error toggling flash: $e');
+      debugPrint('Error toggling flash: $e');
     }
   }
 
