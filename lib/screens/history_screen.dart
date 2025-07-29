@@ -148,7 +148,6 @@ class _HistoryScreenState extends State<HistoryScreen> {
         title: Text(
           identification.speciesName,
           style: const TextStyle(
-            style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 16,
             color: AppTheme.darkBlue,
