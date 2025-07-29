@@ -9,20 +9,20 @@ class AppTheme {
   static const Color lightTeal = Color(0xFF80CBC4);
   static const Color aqua = Color(0xFF00BCD4);
   static const Color deepOcean = Color(0xFF0D47A1);
-
+  
   // Gradient colors
   static const LinearGradient oceanGradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [lightBlue, primaryBlue, deepOcean],
   );
-
+  
   static const LinearGradient darkOceanGradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [darkBlue, Color(0xFF001830), Color(0xFF000B1A)],
   );
-
+  
   static ThemeData get oceanTheme {
     return ThemeData(
       useMaterial3: true,
@@ -42,7 +42,7 @@ class AppTheme {
           fontFamily: 'Roboto',
         ),
       ),
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: primaryBlue,
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white70,
@@ -54,8 +54,8 @@ class AppTheme {
           backgroundColor: teal,
           foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(25)),
           ),
         ),
       ),
@@ -67,7 +67,7 @@ class AppTheme {
       ),
     );
   }
-
+  
   static ThemeData get darkOceanTheme {
     return ThemeData(
       useMaterial3: true,
@@ -80,14 +80,14 @@ class AppTheme {
         backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: IconThemeData(color: Colors.white),
-        titleTextStyle: const TextStyle(
+        titleTextStyle: TextStyle(
           color: Colors.white,
           fontSize: 20,
           fontWeight: FontWeight.w600,
           fontFamily: 'Roboto',
         ),
       ),
-      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: darkBlue,
         selectedItemColor: lightTeal,
         unselectedItemColor: Colors.white54,
@@ -99,8 +99,8 @@ class AppTheme {
           backgroundColor: teal,
           foregroundColor: Colors.white,
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(25)),
           ),
         ),
       ),
