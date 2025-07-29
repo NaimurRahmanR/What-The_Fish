@@ -1,5 +1,3 @@
-```dart
-
 import 'package:hive/hive.dart';
 
 import 'package:uuid/uuid.dart';
@@ -236,4 +234,3 @@ confidence: json['confidence'].toDouble(),
 
 }
 
-```
