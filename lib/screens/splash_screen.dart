@@ -77,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen>
           transitionDuration: const Duration(milliseconds: 500),
         ),
       );
-         }
+    }
   }
 
   @override
@@ -159,15 +159,15 @@ class _SplashScreenState extends State<SplashScreen>
               
               const SizedBox(height: 60),
               
-              // Loading Indicator
+              // Loading Indicator - FIXED: Used SizedBox instead of Container
               FadeTransition(
                 opacity: _fadeAnimation,
-                child: Container(
+                child: const SizedBox(
                   width: 40,
                   height: 40,
                   child: CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation<Color>(
-                      Colors.white.withOpacity(0.7),
+                      Colors.white,
                     ),
                     strokeWidth: 2,
                   ),
