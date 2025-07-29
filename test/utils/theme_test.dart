@@ -14,18 +14,18 @@ void main() {
 
     test('should create ocean theme without errors', () {
       final theme = AppTheme.oceanTheme;
-      
+
       expect(theme, isNotNull);
       expect(theme.useMaterial3, isTrue);
-      expect(theme.fontFamily, equals('Roboto'));
+      expect(theme.textTheme.bodyMedium?.fontFamily, equals('Roboto'));
     });
 
     test('should create dark ocean theme without errors', () {
       final darkTheme = AppTheme.darkOceanTheme;
-      
+
       expect(darkTheme, isNotNull);
       expect(darkTheme.useMaterial3, isTrue);
-      expect(darkTheme.fontFamily, equals('Roboto'));
+      expect(darkTheme.textTheme.bodyMedium?.fontFamily, equals('Roboto'));
     });
 
     test('should have ocean gradient defined', () {
