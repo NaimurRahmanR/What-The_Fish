@@ -198,7 +198,6 @@ class ResultScreen extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
-                                 fontWeight: FontWeight.bold,
                                 color: identification.isEdible ? Colors.green.shade700 : Colors.red.shade700,
                               ),
                             ),
