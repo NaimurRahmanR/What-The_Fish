@@ -98,7 +98,6 @@ class ResultScreen extends StatelessWidget {
                         offset: const Offset(0, 5),
                         blurRadius: 15,
                         color: Colors.black.withOpacity(0.1),
-                         color: Colors.black.withOpacity(0.1),
                       ),
                     ],
                   ),
