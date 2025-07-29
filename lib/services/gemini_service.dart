@@ -104,7 +104,7 @@ Focus on providing accurate marine biology and culinary safety information.
       );
       
     } catch (e) {
-      print('Error identifying fish: $e');
+      debugPrint('Error identifying fish: $e');
       // Return a fallback identification
       return _createFallbackIdentification(imagePath);
     }
@@ -143,7 +143,7 @@ Focus on providing accurate marine biology and culinary safety information.
         'alternatives': [],
       };
     } catch (e) {
-      print('Error parsing JSON: $e');
+      debugPrint('Error parsing JSON: $e');
       return null;
     }
   }
