@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:image_picker/image_picker.dart';
@@ -78,10 +79,10 @@ class _CameraScreenState extends State<CameraScreen>
     try {
       final XFile photo = await _cameraController!.takePicture();
       await _processImage(photo.path);
-      if (!context.mounted) return;
     } catch (e) {
-      if (!context.mounted) return; 
-      ScaffoldMessenger.of(context).showSnackBar(
+      if (!mounted) return;
+      final scaffoldMessenger = ScaffoldMessenger.of(context);
+      scaffoldMessenger.showSnackBar(
         SnackBar(content: Text('Error capturing photo: $e')),
       );
     }
@@ -96,12 +97,11 @@ class _CameraScreenState extends State<CameraScreen>
 
       if (image != null) {
         await _processImage(image.path);
-        if (!context.mounted) return;
-      } 
+      }
     } catch (e) {
-      if (!context.mounted) return; 
-      ScaffoldMessenger.of(context).showSnackBar(
-        
+      if (!mounted) return;
+      final scaffoldMessenger = ScaffoldMessenger.of(context);
+      scaffoldMessenger.showSnackBar(
         SnackBar(content: Text('Error picking image: $e')),
       );
     }
@@ -359,4 +359,3 @@ class _CameraScreenState extends State<CameraScreen>
     );
   }
 }
-
