@@ -1,4 +1,4 @@
-```yaml
+
 
 name: what_the_fish
 description: "What the Fish - AI-powered fish identification app"
@@ -63,4 +63,3 @@ flutter:
     - assets/icons/
 
 
-```
