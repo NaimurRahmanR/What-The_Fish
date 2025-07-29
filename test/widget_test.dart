@@ -6,7 +6,7 @@ import 'package:what_the_fish/providers/fish_provider.dart';
 import 'package:what_the_fish/screens/splash_screen.dart';
 import 'package:what_the_fish/utils/theme.dart';
 
-// A simple mock for FishProvider implementing all required members
+// ✅ MockFishProvider with all required methods implemented
 class MockFishProvider extends ChangeNotifier implements FishProvider {
   List<FishIdentification> _identifications = [];
   bool _isLoading = false;
@@ -34,13 +34,17 @@ class MockFishProvider extends ChangeNotifier implements FishProvider {
 
   @override
   List<FishIdentification> filterByConfidence(double minConfidence) {
-    return _identifications.where((id) => id.confidence >= minConfidence).toList();
+    return _identifications
+        .where((id) => id.confidence >= minConfidence)
+        .toList();
   }
 
   @override
   List<FishIdentification> filterByDateRange(DateTime start, DateTime end) {
-    return _identifications.where((id) =>
-      id.identifiedAt.isAfter(start) && id.identifiedAt.isBefore(end)).toList();
+    return _identifications
+        .where((id) =>
+            id.identifiedAt.isAfter(start) && id.identifiedAt.isBefore(end))
+        .toList();
   }
 
   @override
@@ -49,7 +53,17 @@ class MockFishProvider extends ChangeNotifier implements FishProvider {
     notifyListeners();
   }
 
-  // Implement other FishProvider members if your tests use them (or add stubs)
+  // ✅ Stub for identifyFish
+  @override
+  Future<void> identifyFish(String imagePath) async {
+    // No-op for mock
+  }
+
+  // ✅ Stub for loadHistory
+  @override
+  Future<void> loadHistory() async {
+    // No-op for mock
+  }
 }
 
 void main() {
