@@ -148,7 +148,6 @@ class ExploreScreen extends StatelessWidget {
       width: 100,
       margin: const EdgeInsets.only(right: 15),
       decoration: BoxDecoration(
-        decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
