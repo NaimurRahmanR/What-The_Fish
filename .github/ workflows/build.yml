@@ -1,4 +1,4 @@
-```yml
+
 
 name: Build What the Fish App
 
@@ -254,4 +254,4 @@ jobs:
           asset_name: what-the-fish-v${{ github.run_number }}.aab
           asset_content_type: application/octet-stream
 
-  ```
+  
