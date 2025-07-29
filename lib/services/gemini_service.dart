@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import '../models/fish_identification.dart';
 
