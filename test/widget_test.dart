@@ -8,7 +8,9 @@ import 'package:what_the_fish/utils/theme.dart';
 
 // ✅ MockFishProvider with all required methods implemented
 class MockFishProvider extends ChangeNotifier implements FishProvider {
+  // ignore: prefer_final_fields
   List<FishIdentification> _identifications = [];
+  // ignore: prefer_final_fields
   bool _isLoading = false;
   String? _error;
 
@@ -53,10 +55,11 @@ class MockFishProvider extends ChangeNotifier implements FishProvider {
     notifyListeners();
   }
 
-  // ✅ Stub for identifyFish
+  // ✅ Stub for identifyFish - Corrected return type
   @override
-  Future<void> identifyFish(String imagePath) async {
-    // No-op for mock
+  Future<FishIdentification?> identifyFish(String imagePath) async {
+    // No-op for mock, return null or a mock identification
+    return Future.value(null); 
   }
 
   // ✅ Stub for loadHistory
