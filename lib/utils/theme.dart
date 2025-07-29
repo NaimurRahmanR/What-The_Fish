@@ -9,14 +9,14 @@ class AppTheme {
   static const Color lightTeal = Color(0xFF80CBC4);
   static const Color aqua = Color(0xFF00BCD4);
   static const Color deepOcean = Color(0xFF0D47A1);
-  
+
   // Gradient colors
   static const LinearGradient oceanGradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
     colors: [lightBlue, primaryBlue, deepOcean],
   );
-  
+
   static const LinearGradient darkOceanGradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
@@ -59,10 +59,10 @@ class AppTheme {
           ),
         ),
       ),
-      cardTheme: CardThemeData(
+      cardTheme: const CardTheme(
         elevation: 8,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
       ),
     );
@@ -104,13 +104,13 @@ class AppTheme {
           ),
         ),
       ),
-      cardTheme: CardThemeData(
+      cardTheme: const CardTheme(
         elevation: 8,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
         color: darkBlue,
-         ),
+      ),
     );
   }
 }
