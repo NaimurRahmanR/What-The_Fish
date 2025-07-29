@@ -19,7 +19,7 @@ class GeminiService {
       final imageFile = File(imagePath);
       final imageBytes = await imageFile.readAsBytes();
       
-      final prompt = '''
+      const prompt = '''
 You are an expert marine biologist and fish identification specialist with extensive knowledge of seafood and culinary applications. 
 Analyze this image and identify the fish or aquatic animal shown, including its edibility and culinary information.
 
