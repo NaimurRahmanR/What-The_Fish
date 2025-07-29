@@ -1,3 +1,5 @@
+```yaml
+
 name: Build What the Fish App
 
 on:
@@ -251,3 +253,5 @@ jobs:
           asset_path: ./release-files/app-release.aab
           asset_name: what-the-fish-v${{ github.run_number }}.aab
           asset_content_type: application/octet-stream
+
+  ```
