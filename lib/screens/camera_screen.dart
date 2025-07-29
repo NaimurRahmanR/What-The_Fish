@@ -78,7 +78,9 @@ class _CameraScreenState extends State<CameraScreen>
     try {
       final XFile photo = await _cameraController!.takePicture();
       await _processImage(photo.path);
+      if (!context.mounted) return;
     } catch (e) {
+      if (!context.mounted) return; 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error capturing photo: $e')),
       );
@@ -94,8 +96,10 @@ class _CameraScreenState extends State<CameraScreen>
 
       if (image != null) {
         await _processImage(image.path);
-      }
+        if (!context.mounted) return;
+      } 
     } catch (e) {
+      if (!context.mounted) return; 
       ScaffoldMessenger.of(context).showSnackBar(
         
         SnackBar(content: Text('Error picking image: $e')),
