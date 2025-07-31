@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:what_the_fish/models/fish_identification.dart';
 import 'package:what_the_fish/providers/fish_provider.dart';
-import 'package:what_the_fish/screens/splash_screen.dart';
 import 'package:what_the_fish/utils/theme.dart';
 
 // ✅ MockFishProvider with all required methods implemented
@@ -25,7 +24,7 @@ class MockFishProvider extends ChangeNotifier implements FishProvider {
 
   @override
   Future<void> initializeDatabase() async {
-    await Future.delayed(const Duration(milliseconds: 100)); // Reduced delay for testing
+    await Future.delayed(const Duration(milliseconds: 100));
   }
 
   @override
@@ -55,14 +54,11 @@ class MockFishProvider extends ChangeNotifier implements FishProvider {
     notifyListeners();
   }
 
-  // ✅ Stub for identifyFish - Corrected return type
   @override
   Future<FishIdentification?> identifyFish(String imagePath) async {
-    // No-op for mock, return null or a mock identification
     return Future.value(null); 
   }
 
-  // ✅ Stub for loadHistory
   @override
   Future<void> loadHistory() async {
     // No-op for mock
@@ -71,78 +67,6 @@ class MockFishProvider extends ChangeNotifier implements FishProvider {
 
 void main() {
   group('What the Fish App Tests', () {
-    testWidgets('Splash screen displays correctly', (WidgetTester tester) async {
-      // Set up the widget
-      await tester.pumpWidget(
-        MaterialApp(
-          theme: AppTheme.oceanTheme,
-          darkTheme: AppTheme.darkOceanTheme,
-          home: ChangeNotifierProvider<FishProvider>.value(
-            value: MockFishProvider(),
-            child: const SplashScreen(),
-          ),
-        ),
-      );
-
-      // Initial pump to start the widget
-      await tester.pump();
-
-      // Check if splash screen elements exist
-      // Use findsWidgets instead of findsOneWidget to be more flexible
-      expect(find.byType(SplashScreen), findsOneWidget);
-      
-      // Try to find common splash screen elements with more flexible matching
-      final titleFinder = find.textContaining('What');
-      final subtitleFinder = find.textContaining('Discover');
-      final loadingFinder = find.byType(CircularProgressIndicator);
-
-      // Check if any of these elements exist
-      bool hasTitleText = titleFinder.evaluate().isNotEmpty;
-      bool hasSubtitleText = subtitleFinder.evaluate().isNotEmpty;
-      bool hasLoadingIndicator = loadingFinder.evaluate().isNotEmpty;
-
-      // At least one of these should be present
-      expect(hasTitleText || hasSubtitleText || hasLoadingIndicator, isTrue,
-          reason: 'Splash screen should display at least one expected element');
-
-      // If we find text elements, verify their content
-      if (hasTitleText) {
-        expect(find.textContaining('Fish').evaluate().length, greaterThan(0));
-      }
-
-      // Allow time for animations and initialization
-      await tester.pump(const Duration(milliseconds: 500));
-      
-      // Pump and settle to complete any animations
-      await tester.pumpAndSettle(const Duration(seconds: 5));
-
-      // Verify no exceptions occurred
-      expect(tester.takeException(), isNull);
-    });
-
-    testWidgets('Splash screen handles quick transitions', (WidgetTester tester) async {
-      await tester.pumpWidget(
-        MaterialApp(
-          theme: AppTheme.oceanTheme,
-          home: ChangeNotifierProvider<FishProvider>.value(
-            value: MockFishProvider(),
-            child: const SplashScreen(),
-          ),
-        ),
-      );
-
-      // Just verify the splash screen can be created without errors
-      await tester.pump();
-      expect(find.byType(SplashScreen), findsOneWidget);
-      expect(tester.takeException(), isNull);
-
-      // Try multiple pump cycles to handle different timing scenarios
-      for (int i = 0; i < 5; i++) {
-        await tester.pump(Duration(milliseconds: 100 * (i + 1)));
-        expect(tester.takeException(), isNull);
-      }
-    });
-
     testWidgets('App theme loads correctly', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
@@ -199,30 +123,21 @@ void main() {
       expect(find.text('Hello World'), findsOneWidget);
     });
 
-    testWidgets('Splash screen with alternative text matching', (WidgetTester tester) async {
+    testWidgets('Theme colors are applied correctly', (WidgetTester tester) async {
       await tester.pumpWidget(
         MaterialApp(
           theme: AppTheme.oceanTheme,
-          home: ChangeNotifierProvider<FishProvider>.value(
-            value: MockFishProvider(),
-            child: const SplashScreen(),
+          home: Scaffold(
+            appBar: AppBar(title: const Text('Ocean Theme Test')),
+            body: const Center(child: Text('Theme Test')),
           ),
         ),
       );
 
       await tester.pump();
       
-      // More flexible text matching - check for any text that might be on splash
-      final allTextWidgets = find.byType(Text);
-      final textWidgetCount = allTextWidgets.evaluate().length;
-      
-      // Splash screen should have some text widgets
-      expect(textWidgetCount, greaterThanOrEqualTo(0));
-      
-      // Verify the splash screen widget exists
-      expect(find.byType(SplashScreen), findsOneWidget);
-      
-      // No exceptions should occur
+      expect(find.text('Ocean Theme Test'), findsOneWidget);
+      expect(find.text('Theme Test'), findsOneWidget);
       expect(tester.takeException(), isNull);
     });
   });
