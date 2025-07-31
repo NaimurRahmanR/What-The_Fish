@@ -9,7 +9,6 @@ on:
 
 jobs:
   test:
-   test:
     name: Test Flutter App
     runs-on: ubuntu-latest
     
