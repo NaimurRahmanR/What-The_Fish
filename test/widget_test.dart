@@ -107,7 +107,7 @@ void main() {
 
       // If we find text elements, verify their content
       if (hasTitleText) {
-        expect(find.textContaining('Fish'), findsAtLeastOneWidget);
+        expect(find.textContaining('Fish').evaluate().length, greaterThan(0));
       }
 
       // Allow time for animations and initialization
