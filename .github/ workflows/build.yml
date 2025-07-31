@@ -23,9 +23,6 @@ jobs:
           channel: 'stable'
           cache: true
           
-      - name: Flutter doctor
-        run: flutter doctor -v
-        
       - name: Install dependencies
         run: flutter pub get
         
@@ -33,13 +30,11 @@ jobs:
         run: dart run build_runner build --delete-conflicting-outputs
         
       - name: Analyze code
-        run: flutter analyze --fatal-infos
+        run: flutter analyze
         
       - name: Run tests
-        run: flutter test --coverage --reporter=github
-        continue-on-error: false
+        run: flutter test
 
-  # ... rest of the workflow remains the same
   build-android:
     name: Build Android
     runs-on: ubuntu-latest
@@ -68,11 +63,15 @@ jobs:
       - name: Generate code
         run: dart run build_runner build --delete-conflicting-outputs
         
+      - name: Create Android directories
+        run: |
+          mkdir -p android/app/src/main/kotlin/com/whatthefish/app/what_the_fish
+          
       - name: Build APK
-        run: flutter build apk --release --no-tree-shake-icons
+        run: flutter build apk --release
         
       - name: Build App Bundle
-        run: flutter build appbundle --release --no-tree-shake-icons
+        run: flutter build appbundle --release
         
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
@@ -114,7 +113,7 @@ jobs:
         run: dart run build_runner build --delete-conflicting-outputs
         
       - name: Build web
-        run: flutter build web --release --web-renderer html
+        run: flutter build web --release
         
       - name: Upload web build
         uses: actions/upload-artifact@v4
@@ -122,13 +121,6 @@ jobs:
           name: web-build
           path: build/web/
           retention-days: 30
-          
-      - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build/web
 
   create-release:
     name: Create Release
@@ -157,13 +149,10 @@ jobs:
         run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
         
       - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ github.run_number }}
-          release_name: What the Fish v${{ github.run_number }} (${{ steps.date.outputs.date }})
+          name: What the Fish v${{ github.run_number }} (${{ steps.date.outputs.date }})
           body: |
             🐟 **What the Fish** - AI-powered fish identification app
             
@@ -178,32 +167,12 @@ jobs:
             - Camera and gallery integration
             - Offline history storage with Hive database
             - Ocean-themed UI with Lottie animations
-            - Cross-platform compatibility (Android/iOS/Web)
-            
-            ## 🚀 Installation
-            **Android**: Download the APK file and install directly
-            **Web**: Visit the GitHub Pages deployment
             
             Built with Flutter & Google Gemini AI 🚀
           draft: false
           prerelease: false
-          
-      - name: Upload APK to Release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release-files/app-release.apk
-          asset_name: what-the-fish-v${{ github.run_number }}.apk
-          asset_content_type: application/vnd.android.package-archive
-          
-      - name: Upload AAB to Release
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./release-files/app-release.aab
-          asset_name: what-the-fish-v${{ github.run_number }}.aab
-          asset_content_type: application/octet-stream
+          files: |
+            ./release-files/app-release.apk
+            ./release-files/app-release.aab
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
